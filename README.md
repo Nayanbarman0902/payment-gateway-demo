@@ -1,11 +1,14 @@
-paymentGateway: High-Throughput Async Payment Engine
+**paymentGateway: High-Throughput Async Payment Engine**
 paymentGateway is a robust, event-driven backend engine built with Spring Boot. It is designed to handle high volumes of payment initiations with a focus on financial accuracy, idempotency, and a reliable audit trail.
-🚀 Core Features
+
+ 
+**Core Features**
 Asynchronous Ingestion: Immediate 202 Accepted response with a tracking ID to ensure high throughput.
 Financial Accuracy: Built-in Idempotency (preventing duplicate charges) and Optimistic Locking (preventing race conditions).
 Event-Driven Pipeline: Uses Spring Application Events to decouple Ingestion, Fraud Assessment, and Bank Communication.
 Resilient Design: Includes a Bank Simulator with variable latency and a Retry Mechanism with exponential backoff.
 Compliance Ready: An immutable, append-only Audit Log tracks every state change from INITIALIZED to COMPLETED/FAILED.
+
 🏗️ Architecture & Workflow
 POST /v1/payments: Validates the request and checks for an existing idempotencyKey.
 Internal Event: If new, it persists the payment and broadcasts a PaymentIngestedEvent.
@@ -13,11 +16,13 @@ Async Pipeline:
 Fraud Check: A pluggable service validates the transaction security.
 Acquiring Bank: A simulated external call handles authorization (simulating network flakiness).
 Audit Trail: Every step triggers a Propagation.REQUIRES_NEW transaction to record the transition, ensuring history is kept even if the main process fails.
+
 🛠️ Technical Stack
 Framework: Spring Boot 3.x
 Persistence: Spring Data JPA (Hibernate)
 Database: H2 (Development) / PostgreSQL (Production ready)
 Utilities: Lombok, Spring Retry, Jakarta Validation
+
 🚦 API Endpoints
 1. Initiate Payment
 POST /v1/payments
